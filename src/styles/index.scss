@@ -1,0 +1,909 @@
+// 外层部分
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow-x: hidden;
+}
+
+.h60 {
+  height: 60px;
+}
+
+// header 部分
+.language_box {
+  float: right;
+  line-height: 60px;
+  padding: 0 20px;
+
+  label {
+    margin-bottom: 0;
+    padding: 0 5px;
+  }
+
+  .language_select {
+    width: 100px;
+  }
+}
+
+// nav（二级导航）部分
+.icons_title {
+  align-items: center;
+
+  h4 {
+    margin-bottom: 0;
+  }
+
+  span {
+    width: 24px;
+    height: 24px;
+    margin-right: 16px;
+
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+}
+
+.useNavTag {
+  font-size: 16px;
+
+  .ant-menu-item-selected {
+    color: #3d5ee1 !important;
+  }
+
+  li {
+    > span {
+      display: flex;
+      align-items: center;
+
+      > span {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+
+        > svg {
+          width: inherit;
+          height: inherit;
+        }
+      }
+    }
+  }
+}
+
+// login页 部分
+.login-right {
+  font-size: 15px;
+
+  label {
+    font-size: 15px;
+  }
+
+  #captchaImage {
+    margin-right: 1px;
+    cursor: pointer;
+  }
+
+  .captcha_box {
+    margin-bottom: 0;
+  }
+
+  .btn_box {
+    margin-bottom: 25px;
+
+    button {
+      background-color: #3d5ee1;
+    }
+
+    button:hover {
+      background-color: #18aefa;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  /* 半透明黑色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.forgotpass {
+  span {
+    color: #a0a0a0;
+  }
+}
+
+// register页 部分
+
+.align-items {
+  display: flex;
+
+  button {
+    flex: 1;
+    border-radius: 0 !important;
+  }
+
+  input {
+    border-radius: 8px 0 0 8px;
+  }
+}
+
+#vcDialogTitle0 {
+  font-size: 20px;
+}
+
+.h30 {
+  height: 30px;
+}
+
+.image_box {
+  img {
+    margin-right: 2px;
+    cursor: pointer;
+  }
+}
+
+// main页部分
+
+.user-menu {
+  float: right;
+  margin: 0;
+  position: relative;
+  z-index: 99;
+  padding-right: 15px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-menu.nav {
+  > a {
+    color: #a0a0a0;
+    font-size: 14px;
+    line-height: 58px;
+    padding: 0 15px;
+    height: 60px;
+  }
+
+  > a:hover,
+  > a:focus {
+    background-color: rgb(232 232 232/20%);
+    color: #18aefa;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    padding: 0;
+    visibility: hidden;
+    opacity: 0;
+    display: block;
+    transform: translate(0px, 100px);
+  }
+}
+
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #f3f3f4;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+
+  .has-arrow {
+    .dropdown-toggle:after {
+      border-top: 0;
+      border-left: 0;
+      border-bottom: 2px solid #7e84a3;
+      border-right: 2px solid #7e84a3;
+      content: "";
+      height: 8px;
+      display: inline-block;
+      pointer-events: none;
+      -webkit-transform-origin: 66% 66%;
+      -ms-transform-origin: 66% 66%;
+      transform-origin: 66% 66%;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      -webkit-transition: all 0.15s ease-in-out;
+      transition: all 0.15s ease-in-out;
+      width: 8px;
+      vertical-align: 0;
+    }
+  }
+}
+
+.ant-dropdown {
+  .ant-dropdown-menu {
+    .ant-dropdown-menu-item {
+      :hover a,
+      :focus a {
+        background-color: rgb(232 232 232/20%);
+        color: #18aefa;
+      }
+    }
+
+    :first-child:hover,
+    :first-child:focus {
+      color: #1d1d1d;
+    }
+  }
+}
+
+// aside菜单
+
+.aside_nav {
+  bottom: 0;
+  left: 0;
+  margin-top: 0;
+  position: fixed;
+  top: 59px;
+  transition: all 0.2s ease-in-out 0s;
+  z-index: 100;
+  background: #ffffff;
+
+  > .ant-menu {
+    border-inline-end: none !important;
+  }
+
+  .ant-menu-item {
+    font-size: 16px;
+    margin: 0;
+    padding: 25px 0px 25px 0px !important;
+
+    .ant-menu-title-content {
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+
+      span {
+        padding: 0 20px;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  .ant-menu-item-selected {
+    background-color: #ffffff;
+    position: relative;
+
+    a {
+      color: #3d5ee1;
+    }
+
+    &::after {
+      content: "";
+      width: 6px;
+      height: 100%;
+      background-color: #3d5ee1;
+      display: block;
+      left: 0;
+      top: 0;
+      border-radius: 0px 8px 8px 0px;
+      position: absolute;
+    }
+  }
+}
+
+// 该段样式 important 无法完成覆盖overflow
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-menu-inline .ant-menu-item,
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-menu-vertical .ant-menu-item,
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-menu-inline
+  .ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-menu-vertical
+  .ant-menu-submenu-title {
+  overflow: visible;
+}
+
+.padding_box {
+  // padding: 0 1rem;
+  // width: 24%;
+  //   min-width: 500px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 31px 3px rgb(44 50 63 / 2%);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.content_container {
+  padding-left: 280px;
+  padding-top: 60px;
+
+  .content {
+    margin: 1.875rem 1.875rem 0;
+
+    > h2 {
+      font-size: 22px;
+      font-weight: 500;
+      color: #2c323f;
+      margin-bottom: 1.875rem;
+    }
+
+    .list {
+      padding: 15px;
+    }
+
+    .padding_box {
+      .top_box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        > * {
+          display: block;
+        }
+
+        h3 {
+          font-size: 17px;
+          color: #000;
+        }
+
+        .datas {
+          p {
+            b {
+              font-weight: normal;
+              font-size: 24px;
+              color: #3d5ee1;
+            }
+
+            .color_change {
+              color: #3d5ee1;
+            }
+          }
+
+          .have_icon {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+
+            // span {
+            //     line-height: 10px;
+            //     font-size: 10px;
+            // }
+
+            .eye {
+              width: 15px;
+              height: 15px;
+            }
+
+            > * {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    .user_card {
+      padding: 25px;
+      position: relative;
+
+      .left_content {
+        h4 {
+          font-weight: 400;
+          font-size: 14px;
+          color: #808191;
+          margin-bottom: 5px;
+        }
+
+        p {
+          font-size: 18px;
+          color: #000000;
+        }
+      }
+
+      .user_icons {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        background-color: #edf4ff;
+        border-radius: 8px;
+
+        img {
+          display: block;
+          border: 0;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+      }
+    }
+  }
+
+  .echarts_box {
+    min-height: 350px;
+  }
+}
+
+.h30 {
+  height: 30px;
+  clear: both;
+  zoom: 1;
+}
+
+.page_title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #2c323f;
+  margin-bottom: 5px;
+}
+
+.eye::before {
+  content: "";
+  display: block;
+  background-image: url("assets/icons/eye.png");
+  background-size: contain;
+  width: 15px;
+  height: 15px;
+}
+
+.skills-head {
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: space-between;
+
+  h5,
+  :nth-child(2) {
+    margin-right: 15px;
+  }
+}
+
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-progress
+  .ant-progress-success-bg,
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-progress .ant-progress-bg {
+  position: relative;
+  background-color: #1677ff;
+  border-radius: 100px;
+  transition: all 0.05s ease-in-out;
+}
+
+// .ant-tabs-tabpane {
+//     min-height: 350px;
+// }
+
+.ant-tabs-nav-wrap {
+  width: 100%;
+
+  .ant-tabs-nav-list {
+    width: 100%;
+
+    .ant-tabs-tab {
+      width: 33.3%;
+      justify-content: center;
+      font-size: 16px;
+    }
+  }
+}
+
+// 动态住宅代理部分
+
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-menu-light.ant-menu-horizontal
+  > .ant-menu-item::after,
+:where(.css-dev-only-do-not-override-1dgrbo1).ant-menu-light.ant-menu-horizontal
+  > .ant-menu-submenu::after {
+  inset-inline: 10px;
+  color: #3d5ee1;
+}
+
+.discount {
+  border-radius: 12px;
+  margin-top: -40px;
+  margin-left: -24px;
+  z-index: 1;
+  line-height: 22px;
+}
+
+.region_content_box {
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+
+  .tab-content {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    box-sizing: border-box;
+
+    .tab-links {
+      display: flex;
+      justify-content: space-around;
+      padding: 5px 0;
+      background: rgba(231, 234, 252, 0.75);
+      color: #1b2559;
+      margin-top: 10px;
+      width: 100%;
+
+      div {
+        padding: 6px 10px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        margin-right: 5px;
+
+        &.active {
+          background-color: #007bff;
+          color: #ffffff;
+          border-color: #0056b3;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+
+    .dropdown-list {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+
+      .tab-links-ul {
+        display: flex;
+        padding: 5px 0;
+        color: #1b2559;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        li {
+          list-style: none;
+          padding: 10px;
+          cursor: pointer;
+          text-align: center;
+          flex: 0 0 20%;
+
+          img {
+            width: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.countryList {
+  padding: 10px 0 !important;
+  margin-bottom: 0 !important;
+
+  .countryIconsBox {
+    cursor: pointer;
+    font-size: 15px;
+
+    > img {
+      width: 20px;
+    }
+  }
+}
+
+.radio_group {
+  display: block;
+  padding-left: 40px;
+  > label {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+  }
+
+  > label.active {
+    color: #1890ff;
+    border: 1px solid #1890ff;
+  }
+}
+
+.buyPlan_modal {
+  * {
+    font-size: 16px;
+  }
+}
+
+.price {
+  margin-bottom: 20px;
+  padding: 10px;
+  padding-left: 40px;
+}
+
+.billing {
+  padding: 10px;
+  padding-left: 40px;
+}
+
+.amount {
+  padding: 10px;
+  padding-left: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  b {
+    color: blue;
+    font-size: 18px;
+  }
+}
+
+.pay_btn {
+  padding: 10px;
+  padding-left: 40px;
+
+  .magnifier {
+    margin-right: 4px;
+  }
+}
+
+.usdt_box {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  align-items: center;
+  > canvas {
+    margin: 10px;
+  }
+  .qrcode_text {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    span {
+      margin-right: 5px;
+    }
+  }
+  .usdt_price {
+    padding: 0 10px 20px 10px;
+    > p {
+      margin-bottom: 0;
+      span {
+        font-weight: bold;
+        color: blue;
+        font-size: 18px;
+      }
+    }
+  }
+  .usdt_reciving {
+    padding-bottom: 10px;
+    > span {
+      padding: 10px;
+    }
+  }
+  .usdt_tips {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 0;
+  }
+}
+
+// 不限量代理住宅部分
+.unlimited_submit_button {
+  float: right;
+}
+
+// buyPlan部分
+.plan_box_edit {
+  display: flex;
+  justify-content: space-between;
+
+  .switch_plan {
+    button {
+      border-radius: 0;
+    }
+
+    > :first-child {
+      margin-right: 10px;
+    }
+  }
+}
+
+/* 产品选卡样式 */
+.product-card {
+  background: linear-gradient(135deg, #f9f9f9, #e9e9e9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.date b {
+  font-size: 24px;
+  color: #333;
+}
+
+.date p {
+  margin: 10px 0 5px;
+  color: #666;
+}
+
+/* 确保列表项垂直排列 */
+.teacher-date-list.vertical-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-date-list.vertical-list li {
+  display: block;
+  /* 强制块级显示 */
+  width: 100%;
+  /* 确保全宽 */
+  padding: 10px 0;
+  /* 增加内边距 */
+  border-bottom: 1px solid #e9e9e9;
+  /* 增加下边框 */
+  position: relative;
+  font-size: 14px;
+  color: #333;
+}
+
+.lesson-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.lesson-span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.btn-info {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-info:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 6px rgba(238, 230, 230, 0.76);
+  color: white;
+}
+
+.btn-info i {
+  margin-right: 5px;
+}
+
+.buyPlanButton {
+  display: flex;
+  align-items: center;
+  border-radius: 20px !important;
+
+  svg {
+    margin-bottom: -2px;
+  }
+}
+
+.checkIcon {
+  color: #007bff;
+  margin-right: 10px;
+}
+
+.drop-container {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.ipTimeList {
+  .ant-list-items {
+    display: flex;
+
+    .ipTimeItem {
+      border-block-end: 0;
+      padding: 0 2px;
+
+      :hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        color: #ffffff;
+      }
+
+      .ipTimeButton {
+        span {
+          pointer-events: none;
+        }
+      }
+
+      .ipTimeActive {
+        background-color: #007bff !important;
+        color: #ffffff;
+        border-color: #007bff;
+      }
+    }
+  }
+}
+
+.proxyDataClass {
+  :where(.css-dev-only-do-not-override-1dgrbo1).ant-tabs
+    > .ant-tabs-nav
+    .ant-tabs-nav-list,
+  :where(.css-dev-only-do-not-override-1dgrbo1).ant-tabs
+    > div
+    > .ant-tabs-nav
+    .ant-tabs-nav-list {
+    position: relative;
+    display: flex;
+    transition: opacity 0.3s;
+  }
+
+  .span-alignment {
+    font-size: 16px;
+
+    span {
+      font-weight: normal;
+      color: #212529;
+    }
+  }
+}
+
+// 静态住宅部分
+.payList {
+  .invoice-total-footer {
+    padding: 0;
+    border-top: 0;
+    background-color: none;
+  }
+
+  .ant-table-thead {
+    font-size: 16px;
+
+    tr {
+      .ant-table-cell {
+        font-weight: normal;
+        background-color: #f5f7ff;
+      }
+    }
+  }
+}
+
+.clear_btn {
+  margin-right: 5px;
+}
+
+.gridbox {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(250px - 20px), 1fr));
+  justify-content: space-around;
+  gap: 20px;
+}
