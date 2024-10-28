@@ -1,7 +1,7 @@
 import axios from "axios";
 import { message } from "ant-design-vue";
 import router from "@/router/index.js";
-import { Session, Cache } from "@/utils/common.js";
+import { Session, Lang } from "@/utils/common.js";
 import { Env } from "@/utils/env.js";
 import { store } from "@/store/index.js";
 
@@ -77,7 +77,6 @@ const apiRequest = async ({
   isBody = false, // 是否为请求体方式
   showLoading = false, // 是否显示加载
   async = true, // 是否异步执行
-  language = "zh_CN", // 国际化
   timeout = 10000, // 请求超时时间
   onSuccess, // 成功回调
   checkFailCode = false, //响应错误码自定义处理 function(code,msg){ return true; //false表示往下执行使用默认判断逻辑,true反之}
@@ -109,15 +108,7 @@ const apiRequest = async ({
     headers["token"] = Session.getToken();
   }
 
-  if (language) {
-    switch (language) {
-      case "en_US":
-        headers["Accept-Language"] = "en_US";
-        break;
-      default:
-        headers["Accept-Language"] = "zh_CN";
-    }
-  }
+  headers["Accept-Language"] = Lang.getValue();
 
   const config = {
     url,

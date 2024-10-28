@@ -1,4 +1,4 @@
-import { Cache, Session } from "@/utils/common";
+import { Cache, Lang, Session } from "@/utils/common";
 import { useRouter } from "vue-router";
 import apiRequest from "@/services/api.js";
 import { ref, onMounted } from "vue";
@@ -27,8 +27,7 @@ export default {
       // 切换 i18n 语言
       locale.value = value;
       nowLanguage.value = value;
-      // 存储
-      Cache.set("GlobalLanguage", value);
+      Lang.setValue(value);
     };
     // 用户头像框部分菜单
     const menuClick = ({ key }) => {

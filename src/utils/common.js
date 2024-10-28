@@ -74,6 +74,17 @@ var Session = {
   }
 };
 
+//国际化
+var Lang = {
+   setValue: function(val){
+      localStorage.setItem("lan",val);
+   },
+   getValue:function(){
+      let v = localStorage.getItem("lan");
+      return v==null ? 'en_US' : v;
+   }
+};
+
 // 全局数据数据缓存
 var Cache = {
   _timeoutKey: function (name) { return name + "_timeout"; },
@@ -113,5 +124,6 @@ var Cache = {
 export {
   Session,
   Cache,
+  Lang,
   Common
 };
