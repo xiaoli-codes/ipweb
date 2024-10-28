@@ -76,7 +76,7 @@ const apiRequest = async ({
   useToken = true, // 是否使用 token
   isBody = false, // 是否为请求体方式
   showLoading = false, // 是否显示加载
-  async = true, // 是否同步执行
+  async = true, // 是否异步执行
   language = "zh_CN", // 国际化
   timeout = 10000, // 请求超时时间
   onSuccess, // 成功回调
