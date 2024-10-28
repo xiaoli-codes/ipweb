@@ -1,8 +1,9 @@
 import axios from "axios";
 import { message } from "ant-design-vue";
 import router from "@/router/index.js";
-import { Session } from "@/utils/common.js";
+import { Session, Cache } from "@/utils/common.js";
 import { Env } from "@/utils/env.js";
+import { store } from "@/store/index.js";
 
 // 创建 Axios 实例
 const axiosInstance = axios.create({ baseURL: Env.apiHost() });
@@ -17,10 +18,10 @@ const errorMessages = {
 };
 
 function whenError(code, msg, checkFailCodeFunc) {
-  if(checkFailCodeFunc){
-     if(checkFailCodeFunc(code,msg)){
-        return;
-     }
+  if (checkFailCodeFunc) {
+    if (checkFailCodeFunc(code, msg)) {
+      return;
+    }
   }
   if (errorMessages[code]) {
     message.error(errorMessages[code] || "登录过期! 请重新登录.");
@@ -36,11 +37,11 @@ function whenError(code, msg, checkFailCodeFunc) {
   }
 }
 
-function checkRespStatus(status,errMsg){
-  if(status==null || 200==status){
+function checkRespStatus(status, errMsg) {
+  if (status == null || 200 == status) {
     return true;
   }
-  if (respStatus== 404) {
+  if (respStatus == 404) {
     message.error("请求资源不存在！");
   } else if (respStatus == 403) {
     message.error("无权限! 请联系管理员.");
@@ -53,8 +54,8 @@ function checkRespStatus(status,errMsg){
     message.error("服务正在维护，请稍后再试！");
   } else if (respStatus == 504) {
     message.error("请求超时，请稍后再试！");
-  }else {
-    let msg = errMsg || '请求出错';
+  } else {
+    let msg = errMsg || "请求出错";
     message.error(`${msg}(${respStatus})`);
   }
   return false;
@@ -81,7 +82,7 @@ const apiRequest = async ({
   onSuccess, // 成功回调
   checkFailCode = false, //响应错误码自定义处理 function(code,msg){ return true; //false表示往下执行使用默认判断逻辑,true反之}
   onFail = function (respStatus, code, errMsg) {
-    if(!checkRespStatus(respStatus,errMsg)){
+    if (!checkRespStatus(respStatus, errMsg)) {
       return;
     }
     if (code != null) {
@@ -92,7 +93,7 @@ const apiRequest = async ({
   }, // 失败回调
 }) => {
   if (showLoading) {
-    console.log("加载中...");
+    store.dispatch("setLoading", true);
   }
 
   if (headers["Content-Type"] == null) {
@@ -137,7 +138,7 @@ const apiRequest = async ({
       }
     } else if (isSuccess(response.data.code)) {
       // 如果返回成功，调用 onSuccess 回调
-      if (onSuccess) onSuccess(response.data.data);
+      if (onSuccess) onSuccess(response.data);
     } else if (onFail) {
       // 如果返回不成功，调用 onFail 回调
       onFail(200, response.data.code, response.data.msg || "未知错误");
@@ -153,7 +154,7 @@ const apiRequest = async ({
     }
   } finally {
     if (showLoading) {
-      console.log("加载结束");
+      store.dispatch("setLoading", false);
     }
   }
 };

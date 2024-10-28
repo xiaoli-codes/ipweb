@@ -13,14 +13,13 @@
             class="payList"
           >
             <template #bodyCell="{ column, record }">
-              <template v-if="column.key === 'payType'">
-                <a-tag color="green">{{ record.payType }}</a-tag>
+              <template v-if="column.key === 'content'">
+                {{ record.content }}GB
               </template>
-              <template v-if="column.key === 'orderState'">
-                <a-tag
-                  :color="record.orderState === '正常' ? 'green' : 'red'"
-                  >{{ record.orderState }}</a-tag
-                >
+              <template v-if="column.key === 'status'">
+                <a-tag :color="record.status === 20 ? 'green' : 'red'">{{
+                  record.status === 20 ? "已完成" :  (record.status === 0 ? "已取消" :  (record.status === 1 ?  "待支付" : record.status))
+                }}</a-tag>
               </template>
             </template>
           </a-table>

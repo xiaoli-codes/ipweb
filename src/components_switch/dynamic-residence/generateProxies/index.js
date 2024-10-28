@@ -1,4 +1,4 @@
-import { reactive, onMounted, nextTick } from "vue";
+import { reactive, onMounted, nextTick, computed } from "vue";
 import Prism from "prismjs";
 import "prismjs/components/prism-python.min.js";
 import "prismjs/components/prism-bash.min.js";
@@ -15,11 +15,13 @@ export default {
     const formState = reactive({
       continentId: null, // 洲id
       countryId: null, // 国id
+      countryCode: null, // 国代码
       stateId: null, // 省id
       cityId: null, // 市id
       selectProxyServer: null, // 选中的代理服务器
       selectNumber: null, // 选中的数量
       selectAccount: null, // 选中的账号
+      account: null, // 账号
       userPassword: null, // 使用者对应密码数据
       selectDuration: null, // 选中的持续时间
       port: null, // 端口
@@ -30,6 +32,7 @@ export default {
       cityData: null, // 市数据
       userAccountData: null, // 使用者数据
       proxyServerData: null, // 代理服务器数据
+      proxyURLData: null, // 代理服务器URL数据
     });
     // 禁用类变量声明
     const disabled = reactive({
@@ -54,6 +57,7 @@ export default {
         // 更新id
         formState.continentId = params.continentId;
         formState.countryId = params.countryId;
+        formState.countryCode = params.countryCode;
 
         // 联动部分
         getStateList({ countryId: formState.countryId });
@@ -93,9 +97,9 @@ export default {
           url: "/user/list-accounts",
           isBody: true,
           onSuccess: (data) => {
-            if (data) {
+            if (data.data) {
               // 赋值
-              database.userAccountData = data;
+              database.userAccountData = data.data;
             }
           },
         });
@@ -103,7 +107,6 @@ export default {
     };
     // 使用者选项框被选择的回调函数
     const handleSelectAccount = (value) => {
-      console.log(value);
       if (value) {
         // 查找对应账号的密码并展示
         database.userAccountData.forEach((ele) => {
@@ -112,6 +115,8 @@ export default {
             formState.userPassword = ele.password;
             // 更新账号id
             formState.selectAccount = ele.id;
+            // 更新账号
+            formState.account = ele.name;
           }
         });
       }
@@ -127,9 +132,9 @@ export default {
           url: "/dynamicip/get-proxy-server",
           isBody: true,
           onSuccess: (data) => {
-            if (data) {
+            if (data.data) {
               // 赋值
-              database.proxyServerData = data;
+              database.proxyServerData = data.data;
             }
           },
         });
@@ -160,7 +165,6 @@ export default {
     const handleGenerate = () => {
       // 防抖
       disabled.genarateDisabled = true;
-
       if (
         formState.countryId &&
         formState.stateId &&
@@ -179,18 +183,21 @@ export default {
             prefix: "",
             accountId: formState.selectAccount,
             password: formState.userPassword,
-            countryCode: formState.countryId,
+            countryCode: formState.countryCode,
             stateId: formState.stateId,
             cityId: formState.cityId,
             duration: formState.selectDuration,
             random: "",
             host: formState.selectProxyServer,
-            port: formState.port,
+            port: formState.port - 0,
             count: formState.selectNumber,
           },
           isBody: true,
+          showLoading: true,
           onSuccess: (data) => {
-            console.log(data);
+            if (data.data) {
+              database.proxyURLData = data.data;
+            }
           },
         });
       } else {
@@ -235,9 +242,9 @@ export default {
               countryId: param.countryId,
             },
             onSuccess: (data) => {
-              if (data) {
+              if (data.data) {
                 // 赋值操作
-                database.stateData = data;
+                database.stateData = data.data;
                 // 初次默认选取第一个省
                 formState.stateId = database.stateData[0].id;
                 // 然后请求市的数据
@@ -247,7 +254,7 @@ export default {
                 // 数据存储
                 cachedStateData.push({
                   savaId: formState.countryId,
-                  data: data,
+                  data: data.data,
                 });
               }
             },
@@ -275,9 +282,9 @@ export default {
               stateId: param.stateId,
             },
             onSuccess: (data) => {
-              if (data) {
+              if (data.data) {
                 // 赋值操作
-                database.cityData = data;
+                database.cityData = data.data;
                 // 初次默认选取第一个市
                 formState.cityId = database.cityData[0].id;
                 // 解锁
@@ -285,7 +292,7 @@ export default {
                 // 数据存储
                 cachedCityData.push({
                   savaId: formState.stateId,
-                  data: data,
+                  data: data.data,
                 });
               }
             },
@@ -337,50 +344,43 @@ export default {
     });
 
     // 代码块部分的变量
-    const proxyState = reactive({
+    const proxyState = computed(() => ({
       isProxyDataActive: "proxy",
-      //   cURL部分代码
-      cURLCode:
-        "curl -x http://gate2.ipweb.cc:9500 --proxy-user account-US_texas-30:123456789 https://www.instagram.com",
-      //   Python部分代码
+      cURLCode: `curl -x http://${formState.selectProxyServer} --proxy-user ${formState.account}:${formState.userPassword} https://www.instagram.com`,
       PythonCode: `import requests
-
-def fetch_url(url, proxy):
-    try:
-        response = requests.get(url, proxies=proxy)
-        response.raise_for_status()
-        return response.text
-    except requests.exceptions.RequestException as e:
-        return f"Error: {e}"
-
-proxy_config = {
-    'http': 'http://account-US_texas-30:123456789@gate2.ipweb.cc:9500'
-}
-
-url = 'http://example.com'
-print(fetch_url(url, proxy_config))
-      `,
-      //   nodeJS部分代码
+    
+      def fetch_url(url, proxy):
+          try:
+              response = requests.get(url, proxies=proxy)
+              response.raise_for_status()
+              return response.text
+          except requests.exceptions.RequestException as e:
+              return f"Error: {e}"
+    
+      proxy_config = {
+          'http': 'http://${formState.account}:${formState.userPassword}@${formState.selectProxyServer}'
+      }
+    
+      url = 'http://example.com'
+      print(fetch_url(url, proxy_config))`,
       nodeJsCode: `import fetch from 'node-fetch';
-import createHttpsProxyAgent from 'https-proxy-agent'
-
-const username = 'account-US_texas-30';
-const password = '123456789';
-const proxy = 'gate2.ipweb.cc:9500'
-
-const agent = createHttpsProxyAgent(
-    \`http://\${username}:\${password}@\${proxy}\`
-);
-
-const response = await fetch('https://ip.oxylabs.io/location', {
-  method: 'get',
-  agent: agent,
-});
-
-console.log(await response.text());
-
-      `,
-    });
+      import createHttpsProxyAgent from 'https-proxy-agent'
+    
+      const username = '${formState.account}';
+      const password = '${formState.userPassword}';
+      const proxy = '${formState.selectProxyServer}';
+    
+      const agent = createHttpsProxyAgent(
+          \`http://\${username}:\${password}@\${proxy}\`
+      );
+    
+      const response = await fetch('https://ip.oxylabs.io/location', {
+        method: 'get',
+        agent: agent,
+      });
+    
+      console.log(await response.text());`,
+    }));
 
     return {
       formState,

@@ -34,7 +34,7 @@ export default {
       currency: null,
       currencySymbol: null,
       productId: null, // 产品ID 用户创建接口
-      receving: "THvuAj7ZqqT1yLJ6X9JeUQR1V5HCNP65nx",
+      receving: null,
     });
     // modal用变量
     const modal = reactive({
@@ -68,10 +68,10 @@ export default {
         url: "/order/list-pay",
         isBody: true,
         onSuccess: (data) => {
-          if (data) {
-            database.payListData = data;
+          if (data.data) {
+            database.payListData = data.data;
             // 查找当前选中的支付方式货币
-            data.forEach((ele) => {
+            database.payListData.forEach((ele) => {
               if (ele.code === "usdt") {
                 // 更新当前的货币
                 active.currency = ele.currency;
@@ -87,13 +87,13 @@ export default {
               isBody: true,
               params: {
                 amount: active.amountUSD,
-                payType: data[0].id,
+                payType: data.data[0].id,
               },
               onSuccess: (data) => {
-                if (data) {
+                if (data.data) {
                   // 存储金额
-                  active.amountHK = data.amount;
-                  active.amountUSD = data.amountUsd;
+                  active.amountHK = data.data.amount;
+                  active.amountUSD = data.data.amountUsd;
                 }
               },
             });
@@ -136,25 +136,32 @@ export default {
       apiRequest({
         url: "/dynamicip/create-order",
         isBody: true,
+        showLoading: true,
         params: {
           productId: active.productId,
           payType: active.payType,
         },
         onSuccess: (data) => {
-          if (data) {
+          if (data.data) {
             // 存储modal用amount
-            modal.amount = data.amount;
+            modal.amount = data.data.amount;
             // 判断是否为usdt
-            if (data.payLink.includes("https://")) {
+            if (data.data.payLink.includes("https://")) {
               // 开启支付界面
               modal.payModal = true;
               // 关闭USDT界面（防BUG）
               modal.payUSDT = false;
               // 以完成支付请求提交 跳转至支付页面
-              window.open(data.payLink, "_blank");
+              window.open(data.data.payLink, "_blank");
             } else {
               // 存储订单号
-              modal.orderId = data.orderNo;
+              modal.orderId = data.data.orderNo;
+              // 存储收款地址
+              active.receving = data.data.payLink;
+              // 设置二维码内容
+              qrcode.qrcodeValue = active.receving;
+              // 设置二维码尺寸
+              qrcode.qrcodeSize = 132;
               // USDT界面独享title
               modal.payTitle = "订单号" + "：" + modal.orderId;
               // 关闭支付界面
@@ -191,18 +198,15 @@ export default {
 
     // 页面挂载完成回调函数
     onMounted(() => {
-      qrcode.qrcodeValue = "THvuAj7ZqqT1yLJ6X9JeUQR1V5HCNP65nx";
-
-      qrcode.qrcodeSize = 132;
       // 请求动态IP产品列表
       apiRequest({
         url: "/dynamicip/products",
         method: "POST",
         isBody: true,
         onSuccess: (data) => {
-          if (data) {
+          if (data.data) {
             // 赋值
-            database.dynamicIPData = data;
+            database.dynamicIPData = data.data;
           }
         },
       });

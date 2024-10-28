@@ -22,11 +22,11 @@
               <h3>{{ $t("main.dynamic") }}</h3>
               <div class="datas">
                 <p>
-                  {{ $t("main.remainder") }}：<b>{{ dynamic_billings }}.00</b
+                  {{ $t("main.remainder") }}：<b>{{ dynamic_billings }}</b
                   ><span class="color_change"> GB</span>
                 </p>
                 <p class="have_icon">
-                  总流量：<span>{{ dynamic_billings }}.00 GB&emsp;</span
+                  总流量：<span>{{ dynamic_billings }}GB&emsp;</span
                   ><i class="eye"></i>
                 </p>
               </div>

@@ -12,7 +12,7 @@ const value = "https://www.runoob.com";
 const size = 300;
 
 apiRequest({
-  url: "/dynamicip/get-flow-info",
+  url: "/order/paged-order",
   isBody: true,
   onSuccess: (data) => {
     console.log(data);

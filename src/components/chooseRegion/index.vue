@@ -41,7 +41,7 @@
           <div class="dropdown-list">
             <ul class="tab-links-ul">
               <li
-                @click="onChooseCountry(item.id, item.name)"
+                @click="onChooseCountry(item)"
                 v-for="item in database.countryData"
                 :key="item.id"
               >

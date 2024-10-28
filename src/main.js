@@ -9,8 +9,6 @@ import "styles/bootstrap.min.css";
 import "styles/all.min.css";
 import "styles/style.css";
 import "styles/index.scss";
-import loadingComponents from "components/loading/index.vue";
-
 // 引入更新后的 locales 文件
 import messages from "./local";
 
@@ -35,8 +33,6 @@ app.use(store);
 
 // 使用 vue-i18n
 app.use(i18n);
-// 注册全局loading
-app.component("loading", loadingComponents);
 
 // 挂载应用
 app.mount("#app");

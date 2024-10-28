@@ -152,16 +152,10 @@
         class="form-control"
         placeholder="Enter text here"
         style="height: 17px"
+        :value="database.proxyURLData ? database.proxyURLData.join('\n') : ''"
+        readonly
       >
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-            account-US_texas-30:123456789:gate1.ipweb.cc:12233
-        </textarea
-      >
+      </textarea>
     </div>
     <div class="card-body card-height-500">
       <a-tabs
@@ -173,19 +167,25 @@
           <div class="span-alignment">
             <p class="mt-4">
               {{ $t("dynamice_generateProxies.proxy_address") }}：
-              <span class="badge bg-light text-dark">gate2.ipweb.cc</span>
+              <span class="badge bg-light text-dark">{{
+                formState.selectProxyServer
+              }}</span>
             </p>
             <p class="mt-4">
               {{ $t("dynamice_generateProxies.port") }}:
-              <span class="badge bg-light text-dark">9500</span>
+              <span class="badge bg-light text-dark">{{ formState.port }}</span>
             </p>
             <p class="mt-4">
               {{ $t("dynamice_generateProxies.account") }}:
-              <span class="badge bg-light text-dark">account-US_texas-30</span>
+              <span class="badge bg-light text-dark">{{
+                formState.account
+              }}</span>
             </p>
             <p class="mt-4">
               {{ $t("dynamice_generateProxies.password") }}:
-              <span class="badge bg-light text-dark">123456789</span>
+              <span class="badge bg-light text-dark">{{
+                formState.userPassword
+              }}</span>
             </p>
           </div>
         </a-tab-pane>

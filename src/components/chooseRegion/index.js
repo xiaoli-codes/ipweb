@@ -53,16 +53,17 @@ export default {
     };
 
     // 点击国家选项 触发对应结果
-    const onChooseCountry = (id, name) => {
-      if (id && name) {
+    const onChooseCountry = (item) => {
+      if (item) {
         emit("dataFetched", {
-          continentId: active.continentId,
-          countryId: id,
+          continentId: item.continentId,
+          countryId: item.id,
+          countryCode: item.code,
         });
         // 关闭展示panel
         active.isShowRegion = false;
         // 修改显示地区文本
-        active.showText = name;
+        active.showText = item.name;
       }
     };
 
@@ -102,10 +103,13 @@ export default {
           url: "/area/continents",
           isBody: true,
           onSuccess: (data) => {
-            if (data) {
+            if (data.data) {
               // 会话级数据存储
-              sessionStorage.setItem("continentsData", JSON.stringify(data));
-              database.continentsData = data;
+              sessionStorage.setItem(
+                "continentsData",
+                JSON.stringify(data.data)
+              );
+              database.continentsData = data.data;
               loading.tabTopSpinning = false;
             }
           },
@@ -132,11 +136,11 @@ export default {
           // isBody: true,
           params: param,
           onSuccess: (data) => {
-            if (data) {
-              database.countryData = data;
+            if (data.data) {
+              database.countryData = data.data;
               cachedCountryData.push({
                 savaId: active.continentId,
-                data: data,
+                data: data.data,
               });
               nextTick(() => {
                 loading.tabContentSpinning = false;
