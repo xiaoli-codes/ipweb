@@ -1,6 +1,6 @@
 import apiRequest from "@/services/api.js";
 import { reactive, ref, onMounted, nextTick } from "vue";
-import { Cache } from "@/utils/common.js";
+import { Cache, Lang } from "@/utils/common.js";
 import { useI18n } from "vue-i18n";
 
 export default {
@@ -93,9 +93,10 @@ export default {
 
     // 获取洲列表
     function getContinentList() {
-      if (sessionStorage.getItem("continentsData")) {
+      let key = "continentsData_" + Lang.getValue();
+      if (sessionStorage.getItem(key)) {
         database.continentsData = JSON.parse(
-          sessionStorage.getItem("continentsData")
+          sessionStorage.getItem(key)
         );
         loading.tabTopSpinning = false;
       } else {
@@ -104,11 +105,7 @@ export default {
           isBody: true,
           onSuccess: (data) => {
             if (data) {
-              // 会话级数据存储
-              sessionStorage.setItem(
-                "continentsData",
-                JSON.stringify(data)
-              );
+              sessionStorage.setItem(key,JSON.stringify(data));
               database.continentsData = data;
               loading.tabTopSpinning = false;
             }
