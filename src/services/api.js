@@ -138,7 +138,7 @@ const apiRequest = async ({
       }
     } else if (isSuccess(response.data.code)) {
       // 如果返回成功，调用 onSuccess 回调
-      if (onSuccess) onSuccess(response.data);
+      if (onSuccess) onSuccess(response.data.data);
     } else if (onFail) {
       // 如果返回不成功，调用 onFail 回调
       onFail(200, response.data.code, response.data.msg || "未知错误");

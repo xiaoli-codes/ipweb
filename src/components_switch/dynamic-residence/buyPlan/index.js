@@ -68,8 +68,8 @@ export default {
         url: "/order/list-pay",
         isBody: true,
         onSuccess: (data) => {
-          if (data.data) {
-            database.payListData = data.data;
+          if (data) {
+            database.payListData = data;
             // 查找当前选中的支付方式货币
             database.payListData.forEach((ele) => {
               if (ele.code === "usdt") {
@@ -87,13 +87,13 @@ export default {
               isBody: true,
               params: {
                 amount: active.amountUSD,
-                payType: data.data[0].id,
+                payType: data[0].id,
               },
               onSuccess: (data) => {
-                if (data.data) {
+                if (data) {
                   // 存储金额
-                  active.amountHK = data.data.amount;
-                  active.amountUSD = data.data.amountUsd;
+                  active.amountHK = data.amount;
+                  active.amountUSD = data.amountUsd;
                 }
               },
             });
@@ -142,22 +142,22 @@ export default {
           payType: active.payType,
         },
         onSuccess: (data) => {
-          if (data.data) {
+          if (data) {
             // 存储modal用amount
-            modal.amount = data.data.amount;
-            // 判断是否为usdt
-            if (data.data.payLink.includes("https://")) {
+            modal.amount = data.amount;
+            
+            if (data.payLink.includes("https://")) {
               // 开启支付界面
               modal.payModal = true;
               // 关闭USDT界面（防BUG）
               modal.payUSDT = false;
               // 以完成支付请求提交 跳转至支付页面
-              window.open(data.data.payLink, "_blank");
-            } else {
+              window.open(data.payLink, "_blank");
+            } else if(8==active.payType) {  // usdt
               // 存储订单号
-              modal.orderId = data.data.orderNo;
+              modal.orderId = data.orderNo;
               // 存储收款地址
-              active.receving = data.data.payLink;
+              active.receving = data.payLink;
               // 设置二维码内容
               qrcode.qrcodeValue = active.receving;
               // 设置二维码尺寸
@@ -204,9 +204,9 @@ export default {
         method: "POST",
         isBody: true,
         onSuccess: (data) => {
-          if (data.data) {
+          if (data) {
             // 赋值
-            database.dynamicIPData = data.data;
+            database.dynamicIPData = data;
           }
         },
       });

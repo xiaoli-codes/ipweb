@@ -93,11 +93,8 @@ export default {
         isBody: true,
         showLoading: true,
         onSuccess: (data) => {
-          if (data.code === "0") {
             router.push("/login");
             return true;
-          }
-          return false;
         },
       });
     };
@@ -115,9 +112,9 @@ export default {
         url: "/main/captcha-image",
         onSuccess: (data) => {
           // 刷新验证码
-          imageBox.value.src = data.data.image;
+          imageBox.value.src = data.image;
           // 存储验证码key
-          formState.verifyKey = data.data.key;
+          formState.verifyKey = data.key;
         },
       });
     };
@@ -137,13 +134,11 @@ export default {
           isBody: true,
           showLoading: true,
           onSuccess: (data) => {
-            if (data.code === "0") {
               message.success("已发送验证码至您的邮箱！");
               // 关闭验证码框
               commonState.openModal = false;
               // 存储验证码key
-              formState.emailCaptcha = data.data;
-            }
+              formState.emailCaptcha = data;
           },
           checkFailCode: (code, msg) => {
             if (code === "10001") {

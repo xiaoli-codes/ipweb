@@ -103,13 +103,13 @@ export default {
           url: "/area/continents",
           isBody: true,
           onSuccess: (data) => {
-            if (data.data) {
+            if (data) {
               // 会话级数据存储
               sessionStorage.setItem(
                 "continentsData",
-                JSON.stringify(data.data)
+                JSON.stringify(data)
               );
-              database.continentsData = data.data;
+              database.continentsData = data;
               loading.tabTopSpinning = false;
             }
           },
@@ -136,11 +136,11 @@ export default {
           // isBody: true,
           params: param,
           onSuccess: (data) => {
-            if (data.data) {
-              database.countryData = data.data;
+            if (data) {
+              database.countryData = data;
               cachedCountryData.push({
                 savaId: active.continentId,
-                data: data.data,
+                data: data,
               });
               nextTick(() => {
                 loading.tabContentSpinning = false;

@@ -28,8 +28,8 @@ export default {
       },
       {
         title: "金额",
-        dataIndex: "price",
-        key: "price",
+        dataIndex: "amountDisplay",
+        key: "amountDisplay",
       },
       {
         title: "付款时间",

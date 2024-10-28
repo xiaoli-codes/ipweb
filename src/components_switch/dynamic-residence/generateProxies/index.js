@@ -97,9 +97,9 @@ export default {
           url: "/user/list-accounts",
           isBody: true,
           onSuccess: (data) => {
-            if (data.data) {
+            if (data) {
               // 赋值
-              database.userAccountData = data.data;
+              database.userAccountData = data;
             }
           },
         });
@@ -132,9 +132,9 @@ export default {
           url: "/dynamicip/get-proxy-server",
           isBody: true,
           onSuccess: (data) => {
-            if (data.data) {
+            if (data) {
               // 赋值
-              database.proxyServerData = data.data;
+              database.proxyServerData = data;
             }
           },
         });
@@ -195,8 +195,8 @@ export default {
           isBody: true,
           showLoading: true,
           onSuccess: (data) => {
-            if (data.data) {
-              database.proxyURLData = data.data;
+            if (data) {
+              database.proxyURLData = data;
             }
           },
         });
@@ -242,9 +242,9 @@ export default {
               countryId: param.countryId,
             },
             onSuccess: (data) => {
-              if (data.data) {
+              if (data) {
                 // 赋值操作
-                database.stateData = data.data;
+                database.stateData = data;
                 // 初次默认选取第一个省
                 formState.stateId = database.stateData[0].id;
                 // 然后请求市的数据
@@ -254,7 +254,7 @@ export default {
                 // 数据存储
                 cachedStateData.push({
                   savaId: formState.countryId,
-                  data: data.data,
+                  data: data,
                 });
               }
             },
@@ -282,9 +282,9 @@ export default {
               stateId: param.stateId,
             },
             onSuccess: (data) => {
-              if (data.data) {
+              if (data) {
                 // 赋值操作
-                database.cityData = data.data;
+                database.cityData = data;
                 // 初次默认选取第一个市
                 formState.cityId = database.cityData[0].id;
                 // 解锁
@@ -292,7 +292,7 @@ export default {
                 // 数据存储
                 cachedCityData.push({
                   savaId: formState.stateId,
-                  data: data.data,
+                  data: data,
                 });
               }
             },

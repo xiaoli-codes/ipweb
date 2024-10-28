@@ -47,9 +47,8 @@ export default {
       url: "/order/paged-order",
       isBody: true,
       onSuccess: (data) => {
-        if (data.data) {
-          console.log(data)
-          getUserOrderData.value = data.data.results;
+        if (data) {
+          getUserOrderData.value = data.results;
         }
       },
     });

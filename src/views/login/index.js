@@ -34,7 +34,8 @@ export default {
 
     // 验证失败的回调函数
     const onFinishFailed = (errorInfo) => {
-      message.error("验证失败");
+      console.log("验证失败", errorInfo);
+      onLoading();
     };
 
     // 登录完成并跳转首页
@@ -49,25 +50,18 @@ export default {
         },
         isBody: true,
         useToken: false,
-        showLoading: true,
         onSuccess: (data) => {
-          if (data.code === "0") {
-            // 更新用户data
-            Session.setUser(data.data);
-            // 验证完成，跳转到首页
-            router.push("/");
-          }
+          // 更新用户data
+          Session.setUser(data);
+          // 验证完成，跳转到首页
+          router.push("/");
         },
         checkFailCode: (code, msg) => {
           if (code === "10001") {
-            // 弹出提示
             message.error(msg);
-            // 重新切换验证码
             changeCaptchImg();
-            // 掐断默认判断
             return true;
           }
-          // 执行默认判断
           return false;
         },
       });
@@ -79,17 +73,11 @@ export default {
       formState.verifyCode = "";
       apiRequest({
         url: "/main/captcha-image",
-        params: {
-          username: formState.account,
-          password: formState.password,
-          verifyCode: formState.verifyCode,
-          verifyKey: formState.verifyKey,
-        },
         onSuccess: (data) => {
           // 更新页面上的图片路径
-          captcha_img.value.src = data.data.image;
+          captcha_img.value.src = data.image;
           // 更新formState的key值
-          formState.verifyKey = data.data.key;
+          formState.verifyKey = data.key;
         },
       });
     };

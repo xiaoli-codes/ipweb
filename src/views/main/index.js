@@ -59,7 +59,7 @@ export default {
         url: "/dynamicip/get-residual-flow",
         isBody: true,
         onSuccess: (data) => {
-          dynamic_billings.value = (data.data / 1024 / 1024).toFixed(2);
+          dynamic_billings.value = (data / 1024 / 1024).toFixed(2);
         },
       });
       // 获取全局语言
