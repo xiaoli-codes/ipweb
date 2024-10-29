@@ -12,19 +12,14 @@ function isSuccess(code) {
   return code != null && ("0" == code || code.startsWith("0"));
 }
 
-const errorMessages = {
-  20001: "未登录！请完成登录。",
-  20002: "登录过期! 请重新登录。",
-};
-
 function whenError(code, msg, checkFailCodeFunc) {
   if (checkFailCodeFunc) {
     if (checkFailCodeFunc(code, msg)) {
       return;
     }
   }
-  if (errorMessages[code]) {
-    message.error(errorMessages[code] || "登录过期! 请重新登录.");
+  if ("20001"==code || "20002"==code) {
+    message.error("会话失效! 请重新登录.");
     router.push("/login");
   } else if (code.startsWith("10")) {
     message.error(`参数错误！\r\n${msg}`);
@@ -87,7 +82,7 @@ const apiRequest = async ({
     if (code != null) {
       whenError(code, errMsg, checkFailCode);
     } else {
-      message.error(errMsg || "未知错误");
+      message.error(errMsg || "Unknown error");
     }
   }, // 失败回调
 }) => {
@@ -123,25 +118,32 @@ const apiRequest = async ({
     const response = async
       ? await axiosInstance(config)
       : await axiosInstance(config).then((res) => res); // 同步执行时不等待，直接返回结果
+    //console.log("resp: "+JSON.stringify(response));
     if (response.data == null) {
       if (onFail) {
-        onFail(200, null, "不合法的数据格式");
+        onFail(200, null, "Invalid data format.");
       }
     } else if (isSuccess(response.data.code)) {
-      // 如果返回成功，调用 onSuccess 回调
-      if (onSuccess) onSuccess(response.data.data);
+      if (onSuccess) {
+        onSuccess(response.data.data);
+      }
     } else if (onFail) {
-      // 如果返回不成功，调用 onFail 回调
-      onFail(200, response.data.code, response.data.msg || "未知错误");
+      onFail(200, response.data.code, response.data.msg || "Unknown error");
     }
     return response;
   } catch (error) {
-    // 解构状态码和报错信息
-    const { status: statusCode } = error.response || {};
-    const { code: errorCode, message: errorMessage = "未知错误" } =
-      error.response?.data || {};
-    if (onFail) {
-      onFail(statusCode, null, errorMessage); // 处理失败状态
+    //console.log("error: " + error.toJSON());
+    if(onFail==null || !onFail){
+      return;
+    }
+    if (error.response) {
+      onFail(error.response.status || 500, null, error.message); 
+    } else if (error.request) {
+      // 请求已经成功发起，但没有收到响应
+      // `error.request` 在浏览器中是 XMLHttpRequest 的实例，而在node.js中是 http.ClientRequest 的实例
+      onFail(-1, null, error.message); 
+    } else {
+      onFail(-2, null, error.message); 
     }
   } finally {
     if (showLoading) {
