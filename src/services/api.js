@@ -37,8 +37,8 @@ function whenError(code, msg, checkFailCodeFunc) {
   }
 }
 
-function checkRespStatus(status, errMsg) {
-  if (status == null || 200 == status) {
+function checkRespStatus(respStatus, errMsg) {
+  if (respStatus == null || respStatus == 200) {
     return true;
   }
   if (respStatus == 404) {
