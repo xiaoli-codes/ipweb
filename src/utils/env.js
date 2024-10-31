@@ -9,18 +9,14 @@ var Env = {
       return;
     }
     const domain = window.location.hostname.split(":")[0];
-    let apiDomain;
     if ("user.ipweb.cc" == domain) {
       Env._env = "prod";
-      apiDomain = "ipapi.ipweb.cc";
     } else if ("test.ipweb.cc" == domain) {
       Env._env = "test";
-      apiDomain = "test-ipapi.ipweb.cc";
     } else {
       Env._env = "dev";
-      apiDomain = "test-ipapi.ipweb.cc";
     }
-    Env._apiHost = window.location.protocol + "//" + apiDomain + "/admin";
+    Env._apiHost = window.location.protocol + "//" + domain + "/api/admin";
   },
   /**
      * API域名
