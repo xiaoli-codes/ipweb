@@ -5,6 +5,8 @@ import { Session, Lang } from "@/utils/common.js";
 import { Env } from "@/utils/env.js";
 import { store } from "@/store/index.js";
 
+//https://www.axios-http.cn/docs/api_intro
+
 // 创建 Axios 实例
 const axiosInstance = axios.create({ baseURL: Env.apiHost() });
 
